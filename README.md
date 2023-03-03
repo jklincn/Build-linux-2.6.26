@@ -169,6 +169,7 @@ sudo mknod rootfs/dev/ram b 1 0
 ```
 sudo cp -r busybox-1.30.1/_install/* rootfs
 sudo umount rootfs
+rmdir rootfs
 ```
 
 ## 启动内核

@@ -1,2 +1,4 @@
 .git
+.gitignore
+README.md
 patch-2.6.26
