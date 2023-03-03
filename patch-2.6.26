@@ -1,0 +1,54 @@
+diff -ruN linux-2.6.26/arch/x86/lib/copy_user_64.S linux-2.6.26.change/arch/x86/lib/copy_user_64.S
+--- linux-2.6.26/arch/x86/lib/copy_user_64.S	2008-07-13 21:51:29.000000000 +0000
++++ linux-2.6.26.change/arch/x86/lib/copy_user_64.S	2023-03-03 07:27:50.151397746 +0000
+@@ -341,7 +341,7 @@
+ 11:	pop %rax
+ 7:	ret
+ 	CFI_ENDPROC
+-END(copy_user_generic_c)
++END(copy_user_generic_string)
+ 
+ 	.section __ex_table,"a"
+ 	.quad 1b,3b
+diff -ruN linux-2.6.26/arch/x86/vdso/Makefile linux-2.6.26.change/arch/x86/vdso/Makefile
+--- linux-2.6.26/arch/x86/vdso/Makefile	2008-07-13 21:51:29.000000000 +0000
++++ linux-2.6.26.change/arch/x86/vdso/Makefile	2023-03-03 07:22:22.600838716 +0000
+@@ -25,7 +25,7 @@
+ 
+ export CPPFLAGS_vdso.lds += -P -C
+ 
+-VDSO_LDFLAGS_vdso.lds = -m elf_x86_64 -Wl,-soname=linux-vdso.so.1 \
++VDSO_LDFLAGS_vdso.lds = -m64 -Wl,-soname=linux-vdso.so.1 \
+ 		      	-Wl,-z,max-page-size=4096 -Wl,-z,common-page-size=4096
+ 
+ $(obj)/vdso.o: $(src)/vdso.S $(obj)/vdso.so
+@@ -69,7 +69,7 @@
+ vdso32-images			= $(vdso32.so-y:%=vdso32-%.so)
+ 
+ CPPFLAGS_vdso32.lds = $(CPPFLAGS_vdso.lds)
+-VDSO_LDFLAGS_vdso32.lds = -m elf_i386 -Wl,-soname=linux-gate.so.1
++VDSO_LDFLAGS_vdso32.lds = -m32 -Wl,-soname=linux-gate.so.1
+ 
+ # This makes sure the $(obj) subdirectory exists even though vdso32/
+ # is not a kbuild sub-make subdirectory.
+diff -ruN linux-2.6.26/kernel/mutex.c linux-2.6.26.change/kernel/mutex.c
+--- linux-2.6.26/kernel/mutex.c	2008-07-13 21:51:29.000000000 +0000
++++ linux-2.6.26.change/kernel/mutex.c	2023-03-03 07:24:55.770667096 +0000
+@@ -58,7 +58,7 @@
+  * We also put the fastpath first in the kernel image, to make sure the
+  * branch is predicted by the CPU as default-untaken.
+  */
+-static void noinline __sched
++static __used void noinline __sched
+ __mutex_lock_slowpath(atomic_t *lock_count);
+ 
+ /***
+@@ -95,7 +95,7 @@
+ EXPORT_SYMBOL(mutex_lock);
+ #endif
+ 
+-static noinline void __sched __mutex_unlock_slowpath(atomic_t *lock_count);
++static __used noinline void __sched __mutex_unlock_slowpath(atomic_t *lock_count);
+ 
+ /***
+  * mutex_unlock - release the mutex
