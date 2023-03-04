@@ -1,4 +1,4 @@
-FROM --platform=linux/386 ubuntu:14.04
+FROM registry.cn-hangzhou.aliyuncs.com/jklincn/ubuntu:14.04-386
 
 # (Option) Use opentuna source to accelerate
 RUN sed -i 's/archive.ubuntu.com/opentuna.cn/g' /etc/apt/sources.list
