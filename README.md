@@ -120,7 +120,7 @@ wget https://busybox.net/downloads/busybox-1.30.1.tar.bz2
 **此下载链接会为我带来流量费用，如果可以，请使用官方下载链接。**
 
 ```
-wget https://jklincn-tmp.oss-cn-hangzhou.aliyuncs.com/busybox-1.30.1.tar.bz2
+wget https://jklincn-source.oss-cn-hongkong.aliyuncs.com/busybox-1.30.1.tar.bz2
 ```
 
 解压
