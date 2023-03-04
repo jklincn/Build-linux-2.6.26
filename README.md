@@ -22,6 +22,7 @@ QEMU emulator version 6.2.0 (Debian 1:6.2+dfsg-2ubuntu6.6)
 
 ```
 git clone https://gitee.com/jklincn/build-linux-2.6.26.git
+cd build-linux-2.6.26
 ```
 
 仓库中包含
