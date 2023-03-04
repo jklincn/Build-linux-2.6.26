@@ -101,7 +101,7 @@ docker run --rm -v $(pwd)/linux-2.6.26:/src build-env ARCH=i386 defconfig
 docker run --rm -v $(pwd)/linux-2.6.26:/src build-env bzImage
 ```
 
-另外，如果需要对内核进行配置，使用菜单修改配置文件（注意使用 -it 参数启动交互）
+另外，如果需要对内核进行配置，可以使用菜单修改配置文件（注意使用 -it 参数启动交互）
 
 ```
 docker run -it --rm -v $(pwd)/linux-2.6.26:/src build-env ARCH=i386 menuconfig
