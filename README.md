@@ -20,6 +20,8 @@ QEMU emulator version 6.2.0 (Debian 1:6.2+dfsg-2ubuntu6.6)
 
 ## 克隆仓库
 
+**注意： Github 仓库为 Gitee 镜像仓库，可自行更改 URL**
+
 ```
 git clone https://gitee.com/jklincn/build-linux-2.6.26.git
 cd build-linux-2.6.26
@@ -111,6 +113,19 @@ docker run -it --rm -v $(pwd)/linux-2.6.26:/src build-env ARCH=i386 menuconfig
 
 ```
 wget https://busybox.net/downloads/busybox-1.30.1.tar.bz2
+```
+
+或者使用**作者私人源**加速
+
+**此下载链接会为我带来流量费用，如果可以，请使用官方下载链接。**
+
+```
+wget https://jklincn-tmp.oss-cn-hangzhou.aliyuncs.com/busybox-1.30.1.tar.bz2
+```
+
+解压
+
+```
 tar xf busybox-1.30.1.tar.bz2
 ```
 
