@@ -1,13 +1,24 @@
 # 特征
 
-- 使用容器编译环境，无需对宿主机 gcc、make 等进行降级
-- 使用 qemu 模拟器加载内核
+- 使用 Docker 编译内核，无需在宿主机中配置编译环境
+- 使用 Busybox 制作初始内存磁盘
+- 使用 QEMU 模拟器加载内核
+- 对于网络问题，均已给出国内替代方案
 
 # 测试环境
 
 ```
 $ uname -a
 Linux 5.15.0-60-generic #66-Ubuntu SMP Fri Jan 20 14:29:49 UTC 2023 x86_64 x86_64 x86_64 GNU/Linux
+
+$ cat /etc/issue
+Ubuntu 22.04.2 LTS \n \l
+
+$ lscpu
+Model name:            Intel(R) Core(TM) i5-8260U CPU @ 1.60GHz
+
+$ cat /proc/meminfo
+MemTotal:       16122780 kB
 
 $ docker --version
 Docker version 23.0.1, build a5ee5b1
@@ -16,16 +27,20 @@ $ qemu-system-i386 --version
 QEMU emulator version 6.2.0 (Debian 1:6.2+dfsg-2ubuntu6.6)
 ```
 
+> **注意：由于多核编译中发现 4G 内存会出现 out of memory 现象，建议内存配备 8G 或以上。**
+
 # 步骤
 
 ## 克隆仓库
-
-**注意： Github 仓库为 Gitee 镜像仓库，可自行更改 URL**
 
 ```
 git clone https://gitee.com/jklincn/build-linux-2.6.26.git
 cd build-linux-2.6.26
 ```
+
+> **注意： Github 仓库为 Gitee 镜像仓库，可自行更改 URL**
+>
+> Github 仓库地址：https://github.com/jklincn/Build-linux-2.6.26 ，欢迎前往 star
 
 仓库中包含
 
@@ -61,6 +76,8 @@ docker run --rm -v $(pwd)/[source]:/src build-env [target]
 docker run --rm -v $(pwd)/linux-2.6.26:/src build-env defconfig
 ```
 
+> **注意：镜像的 make 命令自动使用 -j 参数开启全核编译**
+
 ## 编译Linux内核
 
 ### 准备内核源码
@@ -69,11 +86,11 @@ docker run --rm -v $(pwd)/linux-2.6.26:/src build-env defconfig
 wget https://mirrors.edge.kernel.org/pub/linux/kernel/v2.6/linux-2.6.26.tar.xz
 ```
 
-或者使用清华源加速
-
-```
-wget https://mirrors.tuna.tsinghua.edu.cn/kernel/v2.6/linux-2.6.26.tar.xz
-```
+> 或者使用清华源加速：
+>
+> ```
+> wget https://mirrors.tuna.tsinghua.edu.cn/kernel/v2.6/linux-2.6.26.tar.xz
+> ```
 
 解压
 
@@ -81,7 +98,7 @@ wget https://mirrors.tuna.tsinghua.edu.cn/kernel/v2.6/linux-2.6.26.tar.xz
 tar xf linux-2.6.26.tar.xz
 ```
 
-修补源码
+由于官方的源码中有错误，直接编译会报错，因此需要打补丁
 
 ```
 patch -p0 < patch-2.6.26
@@ -101,7 +118,7 @@ docker run --rm -v $(pwd)/linux-2.6.26:/src build-env ARCH=i386 defconfig
 docker run --rm -v $(pwd)/linux-2.6.26:/src build-env ARCH=i386 bzImage
 ```
 
-另外，如果需要对内核进行配置，可以使用菜单修改配置文件（注意使用 -it 参数启动交互）
+（可选）如果需要对内核进行配置，可以使用菜单修改配置文件（注意使用 -it 参数启动交互）
 
 ```
 docker run -it --rm -v $(pwd)/linux-2.6.26:/src build-env ARCH=i386 menuconfig
@@ -115,13 +132,13 @@ docker run -it --rm -v $(pwd)/linux-2.6.26:/src build-env ARCH=i386 menuconfig
 wget https://busybox.net/downloads/busybox-1.30.1.tar.bz2
 ```
 
-或者使用**作者私人源**加速
-
-**此下载链接会为我带来流量费用，如果可以，请使用官方下载链接。**
-
-```
-wget https://jklincn-source.oss-cn-hongkong.aliyuncs.com/busybox-1.30.1.tar.bz2
-```
+> 或者使用**作者私人源**加速
+>
+> **此下载链接会为我带来流量费用，如果可以，请使用官方下载链接。**
+>
+> ```
+> wget https://jklincn-source.oss-cn-hongkong.aliyuncs.com/busybox-1.30.1.tar.bz2
+> ```
 
 解压
 
@@ -185,7 +202,6 @@ sudo mknod rootfs/dev/ram b 1 0
 ```
 sudo cp -r busybox-1.30.1/_install/* rootfs
 sudo umount rootfs
-rmdir rootfs
 ```
 
 ## 启动内核
