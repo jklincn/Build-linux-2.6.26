@@ -29,6 +29,10 @@ QEMU emulator version 6.2.0 (Debian 1:6.2+dfsg-2ubuntu6.6)
 
 > **注意：由于多核编译中发现 4G 内存会出现 out of memory 现象，建议内存配备 8G 或以上。**
 
+# 演示视频
+
+[5分钟编译Linux-2.6.26内核+使用busybox制作initrd+qemu运行](https://www.bilibili.com/video/BV1vY41167EG)
+
 # 步骤
 
 ## 克隆仓库
