@@ -90,10 +90,10 @@ docker run --rm -v $(pwd)/linux-2.6.26:/src build-env defconfig
 wget https://mirrors.edge.kernel.org/pub/linux/kernel/v2.6/linux-2.6.26.tar.xz
 ```
 
-> 或者使用清华源加速：
+> 或者使用北京外国语大学镜像源加速：
 >
 > ```
-> wget https://mirrors.tuna.tsinghua.edu.cn/kernel/v2.6/linux-2.6.26.tar.xz
+> wget https://mirrors.bfsu.edu.cn/kernel/v2.6/linux-2.6.26.tar.xz
 > ```
 
 解压
