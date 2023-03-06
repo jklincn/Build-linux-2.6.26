@@ -53,7 +53,7 @@ cd build-linux-2.6.26
 
 ## 准备Docker镜像
 
-### 安装 Docker
+### 安装 Docker Engine
 
 参见 [Install Docker Engine](https://docs.docker.com/engine/install/)
 
