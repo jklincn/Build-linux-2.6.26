@@ -219,3 +219,30 @@ sudo umount rootfs
 ```
 qemu-system-i386 -nographic -kernel linux-2.6.26/arch/x86/boot/bzImage -initrd initrd.img -append "root=/dev/ram init=/bin/sh console=ttyS0"
 ```
+
+如果成功，最后会输出如下信息，即可使用 busybox 中的系统常见程序（位于 /bin ）。
+
+```
+RAMDISK: ext2 filesystem found at block 0
+RAMDISK: Loading 4096KiB [1 disk] into ram disk... done.
+VFS: Mounted root (ext2 filesystem) readonly.
+Freeing unused kernel memory: 240k freed
+/ # 
+```
+
+### 虚拟机中可能遇见的问题
+
+> Failed to execute /bin/sh.	Attempting defaults...
+>
+> Kernel panic - not syncing: No init found.	Try passing init= option to kernel.
+
+此错误在虚拟机中比较常见，个人猜测是虚拟机中磁盘制作有问题。如果有人知道问题欢迎联系。
+
+可以尝试个人已制作好的初始内存磁盘，步骤如下：
+
+```
+rm initrd.img
+wget https://jklincn-source.oss-cn-hongkong.aliyuncs.com/initrd.img
+```
+
+再重新使用 QEMU 启动。
