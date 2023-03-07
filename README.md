@@ -208,7 +208,13 @@ sudo cp -r busybox-1.30.1/_install/* rootfs
 sudo umount rootfs
 ```
 
-## 启动内核
+## 在QEMU中运行内核
+
+### 安装 QEMU
+
+参见 [Download QEMU](https://www.qemu.org/download/#linux)
+
+### 使用 QEMU 启动
 
 ```
 qemu-system-i386 -nographic -kernel linux-2.6.26/arch/x86/boot/bzImage -initrd initrd.img -append "root=/dev/ram init=/bin/sh console=ttyS0"
