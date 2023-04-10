@@ -198,6 +198,7 @@ mkdir rootfs
 sudo mount -o loop initrd.img rootfs
 sudo mkdir rootfs/dev
 sudo mknod rootfs/dev/console c 5 1
+sudo mknod rootfs/dev/null c 1 3
 sudo mknod rootfs/dev/ram b 1 0
 ```
 
