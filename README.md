@@ -136,14 +136,6 @@ docker run -it --rm -v $(pwd)/linux-2.6.26:/src build-env ARCH=i386 menuconfig
 wget https://busybox.net/downloads/busybox-1.30.1.tar.bz2
 ```
 
-> 或者使用**作者私人源**加速
->
-> **此下载链接会为我带来流量费用，如果可以，请使用官方下载链接。**
->
-> ```
-> wget https://jklincn-source.oss-cn-hongkong.aliyuncs.com/busybox-1.30.1.tar.bz2
-> ```
-
 解压
 
 ```
@@ -238,12 +230,5 @@ Freeing unused kernel memory: 240k freed
 > Kernel panic - not syncing: No init found.	Try passing init= option to kernel.
 
 此错误在虚拟机中比较常见，个人猜测是虚拟机中磁盘制作有问题。如果有人知道问题欢迎联系。
-
-可以尝试个人已制作好的初始内存磁盘，步骤如下：
-
-```
-rm initrd.img
-wget https://jklincn-source.oss-cn-hongkong.aliyuncs.com/initrd.img
-```
 
 再重新使用 QEMU 启动。
