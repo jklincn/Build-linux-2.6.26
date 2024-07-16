@@ -59,7 +59,7 @@ cd build-linux-2.6.26
 docker build -t build-env .
 ```
 
-构建速度取决于处理器性能与网络质量（已使用 opentuna 源加速）
+构建速度取决于处理器性能与网络质量（已使用 ustc 源加速）
 
 ### 镜像使用方法
 
